@@ -225,7 +225,7 @@ packages:
     source: hosted
     version: "0.3.0"
   google_mlkit_image_labeling:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_mlkit_image_labeling
       sha256: "9251c91c9281378a4716bb96dc0d3c9f54c0f809577aaba47ef24c52941dc859"
