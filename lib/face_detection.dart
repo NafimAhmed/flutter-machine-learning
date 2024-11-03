@@ -80,8 +80,10 @@ class _FaceDetectionState extends State<FaceDetection> {
     for(Face f in faces){
       if(f.smilingProbability!>=0.5){
 
-        result='Smiling';
+        result+='Smiling';
 
+      }else{
+        result+='Serious';
       }
     }
 
@@ -113,6 +115,7 @@ class _FaceDetectionState extends State<FaceDetection> {
 
     setState(() {
       _image;
+      result;
     });
      drawRectangleAroundFaces();
   }
@@ -131,104 +134,106 @@ class _FaceDetectionState extends State<FaceDetection> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('images/bg.jpg'), fit: BoxFit.cover),
-      ),
-      child: Column(
-        children: [
-          const SizedBox(
-            width: 100,
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 100),
-            child: Stack(children: <Widget>[
-              Center(
-                child: ElevatedButton(
-                  onPressed: _imgFromGallery,
-                  onLongPress: _imgFromCamera,
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent),
-                  child:
+        body: SingleChildScrollView(
+          child: Container(
+                decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('images/bg.jpg'), fit: BoxFit.cover),
+                ),
+                child: Column(
+          children: [
+            const SizedBox(
+              width: 100,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 100),
+              child: Stack(children: <Widget>[
+                Center(
+                  child: ElevatedButton(
+                    onPressed: _imgFromGallery,
+                    onLongPress: _imgFromCamera,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent),
+                    child:
 
 
 
-                  // Container(
-                  //   margin: const EdgeInsets.only(top: 8),
-                  //   child: _image != null
-                  //       ? Image.file(
-                  //           _image!,
-                  //           width: 335,
-                  //           height: 495,
-                  //           fit: BoxFit.fill,
-                  //         )
-                  //       : Container(
-                  //           width: 340,
-                  //           height: 330,
-                  //           color: Colors.black,
-                  //           child: const Icon(
-                  //             Icons.camera_alt,
-                  //             color: Colors.white,
-                  //             size: 100,
-                  //           ),
-                  //         ),
-                  // ),
-                  //
+                    // Container(
+                    //   margin: const EdgeInsets.only(top: 8),
+                    //   child: _image != null
+                    //       ? Image.file(
+                    //           _image!,
+                    //           width: 335,
+                    //           height: 495,
+                    //           fit: BoxFit.fill,
+                    //         )
+                    //       : Container(
+                    //           width: 340,
+                    //           height: 330,
+                    //           color: Colors.black,
+                    //           child: const Icon(
+                    //             Icons.camera_alt,
+                    //             color: Colors.white,
+                    //             size: 100,
+                    //           ),
+                    //         ),
+                    // ),
+                    //
 
 
 
-                  Container(
-                    width: 335,
-                    height: 495,
-                    margin: const EdgeInsets.only(
-                      top: 45,
-                    ),
-                    child: image != null
-                        ? Center(
-                            child: FittedBox(
-                              child: SizedBox(
-                                width: image.width.toDouble(),
-                                height: image.width.toDouble(),
-                                child: CustomPaint(
-                                  painter: FacePainter(
-                                      facesList: faces, imageFile: image),
+                    Container(
+                      width: 335,
+                      height: 495,
+                      margin: const EdgeInsets.only(
+                        top: 45,
+                      ),
+                      child: image != null
+                          ? Center(
+                              child: FittedBox(
+                                child: SizedBox(
+                                  width: image.width.toDouble(),
+                                  height: image.width.toDouble(),
+                                  child: CustomPaint(
+                                    painter: FacePainter(
+                                        facesList: faces, imageFile: image),
+                                  ),
                                 ),
                               ),
+                            )
+                          : Container(
+                              color: Colors.black,
+                              width: 340,
+                              height: 330,
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
                             ),
-                          )
-                        : Container(
-                            color: Colors.black,
-                            width: 340,
-                            height: 330,
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                            ),
-                          ),
+                    ),
+
+
+
+
+
+
                   ),
-
-
-
-
-
-
+                ),
+              ]),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: Text(
+                result,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 36, color: Colors.green),
+              ),
+            ),
+          ],
                 ),
               ),
-            ]),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: Text(
-              result,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 36, color: Colors.green),
-            ),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
